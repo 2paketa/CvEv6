@@ -9,13 +9,16 @@ using Flurl;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using CvEv6WinForm.DTOs;
 
 namespace CvEv6WinForm
 {
-    sealed class DataFromApi
+    [Serializable]
+    public class DataFromApi
     {
 
-        public static DataFromApi instance = null;
 
         public bool DataLoaded;
 
@@ -135,6 +138,50 @@ namespace CvEv6WinForm
             }
         }
 
+        public async Task<List<MainBody>> getMainBodies()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var res = await client.GetAsync($"http://localhost:10412/api/mainbody");
+                    var content = await res.Content.ReadAsStringAsync();
 
+                    if (content != null)
+                    {
+                        var items = JsonConvert.DeserializeObject<List<MainBody>>(content);
+                        return items;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Woops");
+                        return null;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Get Exceptioned");
+                MessageBox.Show(e.ToString());
+                return null;
+            }
+        }
+
+        public static bool IsApiOnline()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    string result = client.DownloadString("http://localhost:10412/api/");
+                }
+                return true;
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("API Offline");
+                return false;
+            }
+        }
     }
 }

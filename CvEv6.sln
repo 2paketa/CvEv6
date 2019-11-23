@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CvECommon", "CvECommon\CvEC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CvEv6.API", "..\CvEv6.API\CvEv6.API\CvEv6.API.csproj", "{CE405EA9-D727-488A-ACD6-7A8DE25EFC30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CvETests", "CvETests\CvETests.csproj", "{98BD1BC1-85F3-48DD-A654-7F368B16659A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CE405EA9-D727-488A-ACD6-7A8DE25EFC30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE405EA9-D727-488A-ACD6-7A8DE25EFC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE405EA9-D727-488A-ACD6-7A8DE25EFC30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98BD1BC1-85F3-48DD-A654-7F368B16659A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98BD1BC1-85F3-48DD-A654-7F368B16659A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98BD1BC1-85F3-48DD-A654-7F368B16659A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98BD1BC1-85F3-48DD-A654-7F368B16659A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

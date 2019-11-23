@@ -6,14 +6,16 @@ using CvECommon;
 
 namespace CvEv6WinForm
 {
-    public class MainBody
+    public class GenerateMainBody
     {
         public int YearsOfExperience { get; set; }
         Activities activities;
         Header header;
-        public MainBody()
+        Random rng;
+        public GenerateMainBody()
         {
             activities = new Activities();
+            rng = new Random();
         }
         
         public string Get(string[] domains)
@@ -22,6 +24,15 @@ namespace CvEv6WinForm
             string finalText = $"{header.Get()}";
             finalText += Environment.NewLine;
             finalText += activities.getDomains(domains);
+            return finalText;
+        }
+
+        public string Get()
+        {
+            header = new Header(rng.Next(2, 20));
+            string finalText = $"{header.Get()}";
+            finalText += Environment.NewLine;
+            finalText += activities.getDomains();
             return finalText;
         }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace CvEv6WinForm
 {
+    [Serializable]
     public class Domain: IDto
     {
         [Browsable(false)]

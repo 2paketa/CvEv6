@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="API\Options.cs" />
     <Compile Include="DTOs\IDto.cs" />
+    <Compile Include="DTOs\MainBody.cs" />
     <Compile Include="Form2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,7 +68,7 @@
     <Compile Include="CV.cs" />
     <Compile Include="DTOs\Document.cs" />
     <Compile Include="DTOs\Domain.cs" />
-    <Compile Include="Repos\DomainRepo.cs" />
+    <Compile Include="Repos\CvERepo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,7 +81,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTOs\Title.cs" />
-    <Compile Include="Repos\TitleRepo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,5 +120,6 @@
       <Name>CvECommon</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

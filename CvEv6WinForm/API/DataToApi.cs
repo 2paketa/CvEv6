@@ -12,7 +12,8 @@ using CvEv6WinForm.DTOs;
 
 namespace CvEv6WinForm
 {
-    class StoreDataToApi
+    [Serializable]
+    public class StoreDataToApi
     {
         private IDto _dto;
         HttpClient client;
@@ -42,18 +43,26 @@ namespace CvEv6WinForm
             {
                 var jsonstr = JsonConvert.SerializeObject(new { name = _dto.Name });
                 var value = new StringContent(jsonstr, Encoding.UTF8, "application/json");
-                var url = "http://localhost:10412/api/" + $"{_dto.GetType().Name}s/";
-                if (_dto is Document)
+                var url = "http://localhost:10412/api/";
+                if (_dto is MainBody)
+                {
+                    url += $"{_dto.GetType().Name}/";
+                }
+                else if (_dto is Document)
                 {
                     var doc = _dto as Document;
-                    url = "http://localhost:10412/api/domains/" + $"{doc.DomainId}/documents";
+                    url += $"{doc.DomainId}/documents";
+                }
+                else
+                {
+                    url += $"{_dto.GetType().Name}s/";
                 }
                 var res = client.PostAsync(url, value);
 
                 try
                 {
                     res.Result.EnsureSuccessStatusCode();
-                    MessageBox.Show("Data successfully registered to API");
+                    //MessageBox.Show("Data successfully registered to API");
                 }
                 catch(Exception e)
                 {

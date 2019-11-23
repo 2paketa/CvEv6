@@ -23,7 +23,7 @@ namespace CvEv6WinForm
             this.yearsOfExperience = yearsOfExperience;
             currentYear = DateTime.Now.Year;
             startingYear = currentYear - yearsOfExperience;
-            var titlesInstance = TitleRepo.GetInstance();
+            var titlesInstance = CvERepo.GetInstance();
             titles = titlesInstance.GetTitles();
         }
 

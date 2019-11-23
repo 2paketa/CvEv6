@@ -5,6 +5,7 @@ using System.ComponentModel;
 
 namespace CvEv6WinForm
 {
+    [Serializable]
     public class Title: IDto
     {
         [Browsable(false)]

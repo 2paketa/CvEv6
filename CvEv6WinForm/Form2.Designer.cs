@@ -38,12 +38,14 @@
             this.action = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.apiDataGrid = new System.Windows.Forms.DataGridView();
+            this.Number = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.documentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.domainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.documentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.titleBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.saveOffline = new System.Windows.Forms.Button();
+            this.mainBodyButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.apiDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.domainBindingSource)).BeginInit();
@@ -60,9 +62,9 @@
             // 
             // start
             // 
-            this.start.Location = new System.Drawing.Point(258, 297);
+            this.start.Location = new System.Drawing.Point(12, 273);
             this.start.Name = "start";
-            this.start.Size = new System.Drawing.Size(140, 29);
+            this.start.Size = new System.Drawing.Size(353, 29);
             this.start.TabIndex = 4;
             this.start.Text = "Send";
             this.start.UseVisualStyleBackColor = true;
@@ -135,24 +137,20 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "Select action:";
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(104, 297);
-            this.progressBar1.MarqueeAnimationSpeed = 50;
-            this.progressBar1.Maximum = 50;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(142, 29);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar1.TabIndex = 17;
-            this.progressBar1.Visible = false;
-            // 
             // apiDataGrid
             // 
             this.apiDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.apiDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Number});
             this.apiDataGrid.Location = new System.Drawing.Point(12, 117);
             this.apiDataGrid.Name = "apiDataGrid";
             this.apiDataGrid.Size = new System.Drawing.Size(354, 150);
             this.apiDataGrid.TabIndex = 20;
+            // 
+            // Number
+            // 
+            this.Number.HeaderText = "#";
+            this.Number.Name = "Number";
             // 
             // documentsBindingSource
             // 
@@ -171,13 +169,36 @@
             // 
             this.titleBindingSource.DataSource = typeof(CvEv6WinForm.Title);
             // 
+            // saveOffline
+            // 
+            this.saveOffline.Location = new System.Drawing.Point(239, 9);
+            this.saveOffline.Name = "saveOffline";
+            this.saveOffline.Size = new System.Drawing.Size(126, 23);
+            this.saveOffline.TabIndex = 21;
+            this.saveOffline.Text = "Save API data to file";
+            this.saveOffline.UseVisualStyleBackColor = true;
+            this.saveOffline.Click += new System.EventHandler(this.saveOffline_Click);
+            // 
+            // mainBodyButton
+            // 
+            this.mainBodyButton.AutoSize = true;
+            this.mainBodyButton.Location = new System.Drawing.Point(210, 41);
+            this.mainBodyButton.Name = "mainBodyButton";
+            this.mainBodyButton.Size = new System.Drawing.Size(72, 17);
+            this.mainBodyButton.TabIndex = 22;
+            this.mainBodyButton.Text = "MainBody";
+            this.mainBodyButton.UseVisualStyleBackColor = true;
+            this.mainBodyButton.CheckedChanged += new System.EventHandler(this.mainBodyButton_CheckedChanged);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 338);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(377, 311);
+            this.Controls.Add(this.mainBodyButton);
+            this.Controls.Add(this.saveOffline);
             this.Controls.Add(this.apiDataGrid);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.action);
             this.Controls.Add(this.domainDropDownList);
@@ -209,11 +230,13 @@
         private System.Windows.Forms.ComboBox action;
         private System.Windows.Forms.Label label4;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.BindingSource documentBindingSource;
         private System.Windows.Forms.DataGridView apiDataGrid;
         private System.Windows.Forms.BindingSource titleBindingSource;
         private System.Windows.Forms.BindingSource domainBindingSource;
         private System.Windows.Forms.BindingSource documentsBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Number;
+        private System.Windows.Forms.Button saveOffline;
+        private System.Windows.Forms.RadioButton mainBodyButton;
     }
 }

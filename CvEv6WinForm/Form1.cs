@@ -1,4 +1,6 @@
 ﻿using CvECommon;
+using CvEv6WinForm.API;
+using CvEv6WinForm.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,33 +15,29 @@ namespace CvEv6WinForm
 {
     public partial class Form1 : Form
     {
-        private MainBody mainbody;
-        private DomainRepo domainRepo;
+        private GenerateMainBody generateMainBody;
+        private CvERepo cvERepo;
         string[] desiredDomains;
 
         public Form1()
         {
             InitializeComponent();
-            //Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Data"));
-            //var domainsLibrary = Path.Combine(Directory.GetCurrentDirectory(), "Data\\domains.csv");
-            //using (var stream = File.Open(domainsLibrary, FileMode.OpenOrCreate))
-            //{
-            //}
-            domainRepo = DomainRepo.GetInstance();
-            numericDoc.Maximum = domainRepo.MaxNumberOfDocs;
+            cvERepo = CvERepo.GetInstance();
+            numericDoc.Maximum = cvERepo.MaxNumberOfDocs;
             getText.Enabled = false;
+            
             label5.Text = "";
         }
 
         private void Run()
         {
-            mainbody = new MainBody();
-            domainRepo.currentNumberOfDocs = (int)numericDoc.Value;
-            mainbody.YearsOfExperience = (int)numericYearExp.Value;
+            generateMainBody = new GenerateMainBody();
+            cvERepo.currentNumberOfDocs = (int)numericDoc.Value;
+            generateMainBody.YearsOfExperience = (int)numericYearExp.Value;
             desiredDomains = selectedDomains.Text.LineToArray();
-            finalText.Text = mainbody.Get(desiredDomains);
+            finalText.Text = generateMainBody.Get(desiredDomains);
             desiredDomains = null;
-            mainbody = null;
+            generateMainBody = null;
         }
 
         private void commaSeparated_CheckedChanged(object sender, EventArgs e)
@@ -59,7 +57,7 @@ namespace CvEv6WinForm
 
         private void selectedDomains_TextChanged(object sender, EventArgs e)
         {
-            numericDoc.Maximum = domainRepo.MaxNumberOfDocs;
+            numericDoc.Maximum = cvERepo.MaxNumberOfDocs;
             var tempDomains = selectedDomains.Text
                 .LineToArray();
             if (tempDomains.GroupBy(x => x).Any(g => g.Count() > 1))
@@ -73,7 +71,7 @@ namespace CvEv6WinForm
                 label5.ForeColor = Color.Red;
                 getText.Enabled = false;
             }
-            else if (domainRepo.isInputValid(selectedDomains.Text.LineToArray()))
+            else if (cvERepo.isInputValid(selectedDomains.Text.LineToArray()))
             {
                 label5.Text = "Click 'Get Text' to generate text";
                 label5.ForeColor = Color.Green;
@@ -87,14 +85,9 @@ namespace CvEv6WinForm
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void sendToAPI_Click(object sender, EventArgs e)
         {
-
             var form2 = new Form2();
             form2.Show();
         }
@@ -105,5 +98,22 @@ namespace CvEv6WinForm
             label5.Text = "";
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            generateMainBody = new GenerateMainBody();
+            cvERepo.currentNumberOfDocs = cvERepo.MaxNumberOfDocs;
+            var mainBodies = new List<MainBody>();
+            for (int i = 0; i < 30 ; i++)
+            {
+                if (!DataFromApi.IsApiOnline()) { break; }
+                var mainbody = new MainBody { Name = generateMainBody.Get() };
+                if (!mainBodies.Any(m => m.Name == mainbody.Name))
+                {
+                    cvERepo.sendData(new MainBody { Name = generateMainBody.Get() }, Options.Create);
+                    mainBodies.Add(mainbody);
+                }
+            }
+            MessageBox.Show("Done!");
+        }
     }
 }

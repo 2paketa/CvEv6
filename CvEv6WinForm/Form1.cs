@@ -25,7 +25,6 @@ namespace CvEv6WinForm
             cvERepo = CvERepo.GetInstance();
             numericDoc.Maximum = cvERepo.MaxNumberOfDocs;
             getText.Enabled = false;
-            
             label5.Text = "";
         }
 

@@ -13,7 +13,7 @@ using CvEv6WinForm.DTOs;
 namespace CvEv6WinForm
 {
     [Serializable]
-    public class CvERepo
+    public class CvERepo: IDisposable
     {
         public int MaxNumberOfDocs
         {
@@ -44,7 +44,7 @@ namespace CvEv6WinForm
         private static string repoOfflinePath = Path.Combine(Directory.GetCurrentDirectory(), "Data\\CvERepo.dat");
         private static string domainsOfflinePath = Path.Combine(Directory.GetCurrentDirectory(), "Data\\Domains.dat");
         private static string titlesOfflinePath = Path.Combine(Directory.GetCurrentDirectory(), "Data\\Titles.dat");
-
+        private static string mainBodiesOfflinePath = Path.Combine(Directory.GetCurrentDirectory(), "Data\\MainBodies.dat");
         public int currentNumberOfDocs { get; set; }
         public List<MainBody> MainBodies { get; private set; }
 
@@ -189,9 +189,17 @@ namespace CvEv6WinForm
         {
             BinaryFormatter b = new BinaryFormatter();
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Data"));
-            using (Stream stream = File.Open(repoOfflinePath, FileMode.Create))
+            using (Stream stream = File.Open(titlesOfflinePath, FileMode.Create))
             {
-                b.Serialize(stream, instance);
+                b.Serialize(stream, titles);
+            }
+            using (Stream stream = File.Open(domainsOfflinePath, FileMode.Create))
+            {
+                b.Serialize(stream, Domains);
+            }
+            using (Stream stream = File.Open(mainBodiesOfflinePath, FileMode.Create))
+            {
+                b.Serialize(stream, MainBodies);
             }
             MessageBox.Show("Data succesfully saved to file");
         }
@@ -208,6 +216,15 @@ namespace CvEv6WinForm
             {
                 Domains = (List<Domain>)b.Deserialize(sr);
             }
+            using (Stream sr = File.Open(mainBodiesOfflinePath, FileMode.Open))
+            {
+                MainBodies = (List<MainBody>)b.Deserialize(sr);
+            }
+        }
+
+        public void Dispose()
+        {
+            SaveDataOffline();
         }
     }
 }

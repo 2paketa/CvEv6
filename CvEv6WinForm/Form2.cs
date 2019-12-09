@@ -84,30 +84,44 @@ namespace CvEv6WinForm
 
         private void start_Click(object sender, EventArgs e)
         {
-            var dataArray = dataBox.Text.LineToArray();
-            SendMultipleRequests(dataArray);
+            //var dataArray = dataBox.Text.LineToArray();
+            SendMultipleRequests();
             ReDraw();
         }
 
-        private void SendMultipleRequests(string[] dataArray)
+        private void SendMultipleRequests()
         {
-            foreach (var input in dataArray)
+            if(options == Options.Create)
             {
-                SendSingleRequest(input);
+                var dataArray = dataBox.Text.LineToArray();
+                foreach (var input in dataArray)
+                {
+                    SendSingleCreateRequest(input);
+                }
+                MessageBox.Show("Data successfully registered to API");
+            }
+            if (options == Options.Delete)
+            {
+                for (int i = 0; i < apiDataGrid.SelectedRows.Count; i++)
+                {
+                    var dto = apiDataGrid.SelectedRows[i].DataBoundItem;
+                    SendSingleDeleteRequest(dto as IDto);
+                }
             }
         }
 
-        private void SendSingleRequest(string input)
+        private void SendSingleDeleteRequest(IDto _dto)
         {
-            IDto _dto = null;
-            if (options == Options.Delete)
+            if (_dto != null)
             {
-                if (apiDataGrid.SelectedRows.Count == 0)
-                {
-                    MessageBox.Show("Please select a row to delete");
-                }
-                _dto = apiDataGrid.SelectedRows[0].DataBoundItem as IDto;
+                cvERepo.sendData(_dto, options);
             }
+        }
+
+        private void SendSingleCreateRequest(string input)
+        {
+            
+            IDto _dto = null;
             if (options == Options.Create)
             {
                 if (input == "")
@@ -140,32 +154,34 @@ namespace CvEv6WinForm
             }
         }
 
+
+
         private void action_SelectedIndexChanged(object sender, EventArgs e)
         {
             dataBox.Visible = false;
-            domainDropDownList.Enabled = false;
+            if (documentButton.Checked)
+            {
+                domainDropDownList.Enabled = true;
+                domainDropDownList.SelectedIndex = 0;
+            }
+            else
+            {
+                domainDropDownList.Enabled = false;
+            }
+                
             switch (action.SelectedIndex)
             {
                 case 0:
                     options = Options.Create;
-                    if (documentButton.Checked)
-                    {
-                        domainDropDownList.Enabled = true;
-                    }
-                    else
-                    {
-                        dataBox.Visible = true;
-                        domainDropDownList.Enabled = false;
-                    }
+                    dataBox.Visible = true;
+                    break;
+                case 1:
+                    options = Options.Edit;
+                    dataBox.Visible = true;
                     break;
                 case 2:
                     options = Options.Delete;
                     dataBox.Visible = false;
-                    if (documentButton.Checked)
-                    {
-                        domainDropDownList.Enabled = true;
-                        domainDropDownList.SelectedIndex = 0;
-                    }
                     break;
             }
         }

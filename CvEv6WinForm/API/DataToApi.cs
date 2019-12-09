@@ -51,7 +51,7 @@ namespace CvEv6WinForm
                 else if (_dto is Document)
                 {
                     var doc = _dto as Document;
-                    url += $"{doc.DomainId}/documents";
+                    url += $"/domains/{doc.DomainId}/documents";
                 }
                 else
                 {
@@ -101,5 +101,6 @@ namespace CvEv6WinForm
             //var content = new StringContent(value, Encoding.UTF8, "application/json");
             //var response = await _client.PostAsync("http://localhost:10412/api/domains/" + _domainId + "/documents", content);
         }
+
     }
 }

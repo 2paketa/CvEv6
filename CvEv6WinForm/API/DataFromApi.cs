@@ -18,14 +18,7 @@ namespace CvEv6WinForm
     [Serializable]
     public class DataFromApi
     {
-
-
         public bool DataLoaded;
-
-        public DataFromApi()
-        {
-        }
-
 
         public async Task<List<Domain>> getApiDomains()
         {

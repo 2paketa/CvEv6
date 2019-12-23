@@ -38,6 +38,7 @@ namespace CvEv6WinForm
             titleButton.Checked = false;
             documentButton.Checked = false;
             apiDataGrid.DataSource = null;
+            dataBox.Text = "";
         }
 
 
